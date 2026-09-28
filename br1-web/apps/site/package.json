@@ -1,21 +1,24 @@
 {
-  "name": "@br1/site",
-  "version": "0.0.1",
+  "name": "br1-site",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vp dev",
     "build": "vp build",
-    "preview": "vp preview"
+    "preview": "vp preview",
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
-    "@br1/core": "workspace:*",
     "animejs": "^4.5.0",
     "solid-js": "^1.9.9"
   },
   "devDependencies": {
     "solid-grab": "^1.2.0",
-    "typescript": "catalog:",
-    "vite-plugin-solid": "^2.11.10"
+    "typescript": "^5.9.0",
+    "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+    "vite-plugin-solid": "^2.11.10",
+    "vite-plus": "latest",
+    "wrangler": "^4.42.0"
   }
 }

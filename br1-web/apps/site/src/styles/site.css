@@ -1,5 +1,5 @@
-@import "@br1/core/tokens.css";
-@import "@br1/core/base.css";
+@import "./tokens.css";
+@import "./base.css";
 
 /* ============================================================================
  * Site chrome: sections, specimen grids, demos.
