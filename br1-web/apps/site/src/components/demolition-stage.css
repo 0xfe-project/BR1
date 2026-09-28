@@ -1,0 +1,366 @@
+/* ============================================================================
+ * DEMOLITION STAGE — the whole first screen, from the decorative language to BR1.
+ *
+ * Two mechanisms, and only two:
+ *
+ *   --hard        a number from 0 to 1, for everything that interpolates:
+ *                 radius, blur, fill, spacing, offsets.
+ *
+ *   --ui-*        the discrete set that CSS cannot tween — font family, case,
+ *                 weight, tracking, accent. These are set per region and they
+ *                 inherit, so a nested region overrides its parent's simply by
+ *                 being nearer. No attribute selectors, no specificity to lose.
+ *
+ * `--hard: 1` on :root means anything outside a region is already BR1.
+ * ========================================================================== */
+
+:root {
+  --hard: 1;
+  --ui-font: var(--font-mono);
+  --ui-case: uppercase;
+  --ui-weight: 700;
+  --ui-track: 0.12em;
+  --ui-accent: var(--color-fg);
+  --ui-ink: var(--color-fg);
+
+  /* the decorative language's own palette, per theme */
+  --deco-surface: #ffffff;
+  --deco-accent: #6366f1;
+  --deco-muted: #6b7280;
+  --deco-ink: #111827;
+  --deco-blue: #38bdf8;
+  --deco-indigo: #6366f1;
+  /* the wash multiplier: over a white surface the gradient needs less of itself */
+  --deco-wash: 1;
+}
+
+.dark {
+  --deco-surface: #171717;
+  --deco-accent: #818cf8;
+  --deco-muted: #9ca3af;
+  --deco-ink: #f4f4f5;
+  --deco-blue: #38bdf8;
+  --deco-indigo: #6366f1;
+  /* over a near-black surface the same percentages vanish, so it takes more */
+  --deco-wash: 1.45;
+}
+
+/* ============================================================================
+ * THE PAGE ITSELF
+ *
+ * The decorative opening is the one everybody has already seen: a white surface
+ * washed with indigo and sky, glass panels floating on it, everything soft.
+ * It is not a straw man — it is what a competent modern product looks like. The
+ * demolition's job is to argue it is not what a fast one looks like.
+ * ========================================================================== */
+
+.shell {
+  background-color: color-mix(in srgb, var(--deco-surface) calc((1 - var(--hard)) * 100%), var(--color-bg));
+  background-image:
+    radial-gradient(900px 540px at 6% -14%,
+      color-mix(in srgb, var(--deco-indigo) calc((1 - var(--hard)) * 32% * var(--deco-wash)), transparent), transparent 62%),
+    radial-gradient(760px 460px at 98% -6%,
+      color-mix(in srgb, var(--deco-blue) calc((1 - var(--hard)) * 26% * var(--deco-wash)), transparent), transparent 58%),
+    radial-gradient(1100px 700px at 50% 118%,
+      color-mix(in srgb, var(--deco-indigo) calc((1 - var(--hard)) * 14% * var(--deco-wash)), transparent), transparent 60%),
+    linear-gradient(180deg, transparent 40%,
+      color-mix(in srgb, var(--deco-blue) calc((1 - var(--hard)) * 12% * var(--deco-wash)), transparent) 100%);
+  background-attachment: fixed;
+}
+
+/* the rails are glass while the page is decorative */
+.shell-nav,
+.shell-spec {
+  backdrop-filter: blur(calc((1 - var(--hard)) * 18px)) saturate(calc(1 + (1 - var(--hard)) * 0.5));
+  -webkit-backdrop-filter: blur(calc((1 - var(--hard)) * 18px)) saturate(calc(1 + (1 - var(--hard)) * 0.5));
+}
+
+/* ============================================================================
+ * LEFT RAIL
+ * ========================================================================== */
+
+.shell-nav {
+  background: color-mix(in srgb, var(--deco-surface) calc((1 - var(--hard)) * 74%), transparent);
+  border-right-color: color-mix(in srgb, transparent calc((1 - var(--hard)) * 100%), var(--color-border-strong));
+  box-shadow:
+    calc((1 - var(--hard)) * 8px) calc((1 - var(--hard)) * 8px)
+    calc((1 - var(--hard)) * 24px)
+    color-mix(in srgb, rgba(0, 0, 0, 0.12) calc((1 - var(--hard)) * 100%), transparent);
+}
+
+.nav-head {
+  border-bottom-color: color-mix(in srgb, transparent calc((1 - var(--hard)) * 100%), var(--color-border-strong));
+}
+
+.nav-brand {
+  font-family: var(--ui-font);
+  color: var(--ui-ink);
+}
+
+.nav-version,
+.nav-group {
+  color: color-mix(in srgb, var(--deco-muted) calc((1 - var(--hard)) * 100%), var(--color-faint));
+}
+
+.nav-group {
+  font-family: var(--ui-font);
+  font-size: calc(8px + (1 - var(--hard)) * 3px);
+  font-weight: var(--ui-weight);
+  letter-spacing: var(--ui-track);
+  text-transform: var(--ui-case);
+}
+
+.nav-item {
+  border-radius: calc((1 - var(--hard)) * 8px);
+  margin: 0 calc((1 - var(--hard)) * 6px);
+  padding: calc(3px + (1 - var(--hard)) * 4px) calc(10px + (1 - var(--hard)) * 4px);
+  border-left-width: calc(var(--hard) * 2px);
+}
+
+.nav-item:hover {
+  background: color-mix(in srgb, var(--deco-accent) calc((1 - var(--hard)) * 12% * var(--deco-wash)), var(--color-overlay));
+}
+
+.nav-item[data-active] {
+  border-left-color: color-mix(in srgb, var(--deco-accent) calc((1 - var(--hard)) * 0%), var(--color-fg));
+  background: color-mix(in srgb, var(--deco-accent) calc((1 - var(--hard)) * 14% * var(--deco-wash)), var(--color-overlay));
+}
+
+.nav-item-label {
+  font-family: var(--ui-font);
+  font-size: calc(10px + (1 - var(--hard)) * 3px);
+  font-weight: var(--ui-weight);
+  letter-spacing: var(--ui-track);
+  text-transform: var(--ui-case);
+  color: color-mix(in srgb, var(--deco-ink) calc((1 - var(--hard)) * 100%), var(--color-muted));
+}
+
+.nav-item:hover .nav-item-label {
+  color: color-mix(in srgb, var(--deco-ink) calc((1 - var(--hard)) * 100%), var(--color-fg));
+}
+
+.nav-item[data-active] .nav-item-label {
+  color: color-mix(in srgb, var(--deco-accent) calc((1 - var(--hard)) * 100%), var(--color-fg));
+  font-weight: calc(700 - (1 - var(--hard)) * 100);
+}
+
+.nav-item-meta {
+  color: color-mix(in srgb, var(--deco-muted) calc((1 - var(--hard)) * 100%), var(--color-faint));
+  font-family: var(--ui-font);
+  letter-spacing: calc(var(--ui-track) * 0.5);
+}
+
+.nav-foot {
+  border-top-color: color-mix(in srgb, transparent calc((1 - var(--hard)) * 100%), var(--color-border-strong));
+}
+
+/* ============================================================================
+ * RIGHT RAIL
+ * ========================================================================== */
+
+.shell-spec {
+  background: color-mix(in srgb, var(--deco-surface) calc((1 - var(--hard)) * 74%), transparent);
+  border-left-color: color-mix(in srgb, transparent calc((1 - var(--hard)) * 100%), var(--color-border-strong));
+  box-shadow:
+    calc((1 - var(--hard)) * -8px) calc((1 - var(--hard)) * 8px)
+    calc((1 - var(--hard)) * 24px)
+    color-mix(in srgb, rgba(0, 0, 0, 0.12) calc((1 - var(--hard)) * 100%), transparent);
+}
+
+.spec-section {
+  border-bottom-color: color-mix(in srgb, transparent calc((1 - var(--hard)) * 100%), var(--color-border));
+}
+
+.spec-head {
+  font-family: var(--ui-font);
+  font-size: calc(8px + (1 - var(--hard)) * 3px);
+  font-weight: var(--ui-weight);
+  letter-spacing: var(--ui-track);
+  text-transform: var(--ui-case);
+  color: color-mix(in srgb, var(--deco-ink) calc((1 - var(--hard)) * 100%), var(--color-muted));
+}
+
+.spec-head-note {
+  font-family: var(--ui-font);
+  letter-spacing: 0;
+  text-transform: none;
+  color: color-mix(in srgb, var(--deco-muted) calc((1 - var(--hard)) * 100%), var(--color-faint));
+}
+
+.spec-key {
+  font-family: var(--ui-font);
+  font-size: calc(9px + (1 - var(--hard)) * 3px);
+  letter-spacing: calc(var(--ui-track) * 0.6);
+  color: color-mix(in srgb, var(--deco-muted) calc((1 - var(--hard)) * 100%), var(--color-muted));
+}
+
+.spec-val {
+  font-family: var(--ui-font);
+  font-size: calc(9px + (1 - var(--hard)) * 3px);
+  letter-spacing: 0;
+  color: color-mix(in srgb, var(--deco-accent) calc((1 - var(--hard)) * 100%), var(--color-fg));
+}
+
+.spec-bar {
+  border-radius: calc((1 - var(--hard)) * 999px);
+  border-color: color-mix(in srgb, transparent calc((1 - var(--hard)) * 100%), var(--color-border-strong));
+  background: color-mix(in srgb, var(--deco-muted) calc((1 - var(--hard)) * 18%), transparent);
+}
+
+.spec-bar-fill {
+  border-radius: calc((1 - var(--hard)) * 999px);
+  background: color-mix(in srgb, var(--deco-accent) calc((1 - var(--hard)) * 100%), var(--color-fg));
+}
+
+/* ============================================================================
+ * THE CLAIM
+ * ========================================================================== */
+
+.sec-head {
+  border-bottom-color: color-mix(in srgb, transparent calc((1 - var(--hard)) * 100%), var(--color-border-strong));
+}
+
+.sec-label {
+  font-family: var(--ui-font);
+  font-size: calc(12px + (1 - var(--hard)) * 3px);
+  font-weight: var(--ui-weight);
+  letter-spacing: calc(var(--ui-track) * 1.5);
+  text-transform: var(--ui-case);
+  color: color-mix(in srgb, var(--deco-ink) calc((1 - var(--hard)) * 100%), var(--color-fg));
+}
+
+.sec-index {
+  color: color-mix(in srgb, var(--deco-muted) calc((1 - var(--hard)) * 100%), var(--color-faint));
+}
+
+.sec-note {
+  font-family: var(--ui-font);
+  letter-spacing: 0;
+  text-transform: none;
+  color: color-mix(in srgb, var(--deco-muted) calc((1 - var(--hard)) * 100%), var(--color-faint));
+}
+
+.dm-hero-line1 {
+  font-family: var(--ui-font);
+  -webkit-text-stroke: calc(var(--hard) * 1.5px) var(--color-border-strong);
+  color: color-mix(in srgb, var(--deco-ink) calc((1 - var(--hard)) * 22%), transparent);
+}
+
+.dm-hero-line2 {
+  font-family: var(--ui-font);
+  color: color-mix(in srgb, var(--deco-ink) calc((1 - var(--hard)) * 100%), var(--color-fg));
+}
+
+/* ============================================================================
+ * THE INSTRUMENTS
+ * ========================================================================== */
+
+.dm-scrub {
+  border-radius: calc((1 - var(--hard)) * 999px);
+  border-color: color-mix(in srgb, transparent calc((1 - var(--hard)) * 100%), var(--color-border-strong));
+  background: color-mix(in srgb, var(--deco-muted) calc((1 - var(--hard)) * 16%), transparent);
+}
+
+.dm-scrub-fill,
+.dm-scrub-head {
+  border-radius: calc((1 - var(--hard)) * 999px);
+  background: color-mix(in srgb, var(--deco-accent) calc((1 - var(--hard)) * 100%), var(--color-fg));
+}
+
+.dm-transport {
+  border-top-color: color-mix(in srgb, transparent calc((1 - var(--hard)) * 100%), var(--color-border-strong));
+}
+
+.dm-hint,
+.dm-transport-status,
+.dm-transport-pct {
+  font-family: var(--ui-font);
+  color: color-mix(in srgb, var(--deco-muted) calc((1 - var(--hard)) * 100%), var(--color-faint));
+}
+
+/* the gutters: a pill you can grab, or a 1px rule you can find */
+.shell-div::after {
+  border-radius: calc((1 - var(--hard)) * 999px);
+}
+
+.shell-div:hover::after,
+.shell-div[data-dragging]::after {
+  background: color-mix(in srgb, var(--deco-accent) calc((1 - var(--hard)) * 100%), var(--color-fg));
+}
+
+/* ---- buttons, wherever they are ---- */
+
+.btn {
+  border-radius: calc((1 - var(--hard)) * 8px);
+  font-family: var(--ui-font);
+  font-size: calc(11px + (1 - var(--hard)) * 1px);
+  font-weight: var(--ui-weight);
+  letter-spacing: var(--ui-track);
+  text-transform: var(--ui-case);
+  padding: calc(5px + (1 - var(--hard)) * 2px) calc(11px + (1 - var(--hard)) * 4px);
+  min-height: calc(27px + (1 - var(--hard)) * 5px);
+}
+
+.btn-outline {
+  border-color: color-mix(in srgb, transparent calc((1 - var(--hard)) * 100%), var(--color-border-strong));
+  background: color-mix(in srgb, var(--deco-accent) calc((1 - var(--hard)) * 100%), transparent);
+  color: color-mix(in srgb, #ffffff calc((1 - var(--hard)) * 100%), var(--color-fg));
+  box-shadow:
+    0 calc((1 - var(--hard)) * 2px) calc((1 - var(--hard)) * 8px)
+    color-mix(in srgb, rgba(99, 102, 241, 0.4) calc((1 - var(--hard)) * 100%), transparent);
+}
+
+.btn-ghost {
+  color: color-mix(in srgb, var(--deco-muted) calc((1 - var(--hard)) * 100%), var(--color-muted));
+}
+
+/* ---- the readout, taken apart on the specimen's own beat ---- */
+
+.dm-readout-head {
+  font-family: var(--ui-font);
+  letter-spacing: var(--ui-track);
+  text-transform: var(--ui-case);
+  color: color-mix(in srgb, var(--deco-ink) calc((1 - var(--hard)) * 100%), var(--color-fg));
+}
+
+.dm-readout-hint {
+  font-family: var(--ui-font);
+  letter-spacing: 0;
+  text-transform: none;
+  color: color-mix(in srgb, var(--deco-muted) calc((1 - var(--hard)) * 100%), var(--color-faint));
+}
+
+.dm-readout-row {
+  font-family: var(--ui-font);
+  border-bottom-color: color-mix(in srgb, transparent calc((1 - var(--hard)) * 100%), var(--color-border));
+}
+
+.dm-readout-key {
+  font-size: calc(9px + (1 - var(--hard)) * 3px);
+  letter-spacing: calc(var(--ui-track) * 0.6);
+  color: color-mix(in srgb, var(--deco-muted) calc((1 - var(--hard)) * 100%), var(--color-muted));
+}
+
+.dm-readout-from,
+.dm-readout-arrow {
+  font-size: calc(9px + (1 - var(--hard)) * 3px);
+  color: color-mix(in srgb, var(--deco-muted) calc((1 - var(--hard)) * 100%), var(--color-faint));
+}
+
+.dm-readout-live {
+  font-size: calc(9px + (1 - var(--hard)) * 3px);
+  letter-spacing: 0;
+  color: color-mix(in srgb, var(--deco-accent) calc((1 - var(--hard)) * 100%), var(--color-fg));
+}
+
+.dm-readout-row--mode {
+  border-top-color: color-mix(in srgb, transparent calc((1 - var(--hard)) * 100%), var(--color-border-strong));
+}
+
+/* the workbench grid belongs to the decorative language */
+.dm-floor {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--color-border) calc(var(--hard) * 100%), transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-border) calc(var(--hard) * 100%), transparent) 1px, transparent 1px);
+  border-right-color: color-mix(in srgb, transparent calc((1 - var(--hard)) * 100%), var(--color-border-strong));
+}

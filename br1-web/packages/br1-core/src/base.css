@@ -1,0 +1,118 @@
+/* ============================================================================
+ * BR1-CORE — base.css
+ * Reset + global rules. Import after tokens.css.
+ * ========================================================================== */
+
+@import "./tokens.css";
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+html {
+  color-scheme: light;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--color-bg);
+  color: var(--color-fg);
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  overscroll-behavior: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* re-enable selection where it matters */
+p, span, h1, h2, h3, h4, h5, h6,
+[data-selectable], .selectable,
+input, textarea {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* ---- focus ---- */
+:focus-visible {
+  outline: 2px solid var(--color-fg);
+  outline-offset: 1px;
+}
+
+/* ---- selection ---- */
+::selection {
+  background: var(--color-fg);
+  color: var(--color-bg-solid);
+}
+
+/* ---- scrollbar ---- */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+}
+
+/* ---- no drag on media ---- */
+img, svg, video {
+  -webkit-user-drag: none;
+  display: block;
+}
+
+/* ---- mono utility ---- */
+.mono {
+  font-family: var(--font-mono);
+}
+
+/* ---- micro-label utility (9px mono uppercase) ---- */
+.label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* ---- keyframes ---- */
+@keyframes br1-pop {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes br1-unpop {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translateY(3px); }
+}
+
+@keyframes br1-blink {
+  50% { opacity: 0.25; }
+}
+
+@keyframes br1-bar-in {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+/* ---- reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

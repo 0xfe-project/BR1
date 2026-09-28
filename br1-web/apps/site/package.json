@@ -1,0 +1,21 @@
+{
+  "name": "@br1/site",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vp dev",
+    "build": "vp build",
+    "preview": "vp preview"
+  },
+  "dependencies": {
+    "@br1/core": "workspace:*",
+    "animejs": "^4.5.0",
+    "solid-js": "^1.9.9"
+  },
+  "devDependencies": {
+    "solid-grab": "^1.2.0",
+    "typescript": "catalog:",
+    "vite-plugin-solid": "^2.11.10"
+  }
+}

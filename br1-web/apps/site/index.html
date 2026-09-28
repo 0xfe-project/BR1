@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="BR1 — Brutalist Renewed. A design language demonstrated on the page it is described on." />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="icon" href="/br1.svg" type="image/svg+xml" />
+    <title>BR1 — Brutalist Renewed</title>
+    <style>
+      /* Subset of AKR DWG SC NFM: Latin, Latin-1, general punctuation, arrows and
+         geometric shapes. The full face carries 43,324 glyphs — 20,976 of them CJK
+         ideographs this site never paints — for 6.7 MB. The subset is 21 KB. The
+         complete file lives at eta-agent/packages/eta-client/public/ and is the
+         source for regenerating this one:
+
+           python3 -m fontTools.subset AKRDWGSCNFM-Regular.woff2 \
+             --unicodes="U+0020-007E,U+00A0-00FF,U+2000-206F,U+2190-21FF,U+25A0-25FF,
+                         U+2713-2716" \
+             --layout-features='*' --flavor=woff2 --no-hinting \
+             --output-file=AKRDWGSCNFM-Latin.woff2
+
+         unicode-range lets the browser skip the download entirely for any script
+         outside it, falling straight through to system-ui. */
+      @font-face {
+        font-family: "AKRDWGSCNFM";
+        src: url("/AKRDWGSCNFM-Latin.woff2") format("woff2");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+        unicode-range: U+0020-007E, U+00A0-00FF, U+2000-206F, U+2190-21FF, U+25A0-25FF, U+2713-2716;
+      }
+      @font-face {
+        font-family: "AKRDWGSCNFM";
+        src: url("/AKRDWGSCNFM-Latin.woff2") format("woff2");
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+        unicode-range: U+0020-007E, U+00A0-00FF, U+2000-206F, U+2190-21FF, U+25A0-25FF, U+2713-2716;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

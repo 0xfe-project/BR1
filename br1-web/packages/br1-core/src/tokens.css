@@ -1,0 +1,77 @@
+/* ============================================================================
+ * BR1-CORE — tokens.css
+ * Brutalist Renewed v1 — token system
+ * OKLCH throughout. zero radius. borders hard. color is signal.
+ * ========================================================================== */
+
+:root {
+  /* ---- neutral ramp — 10 steps, OKLCH ---- */
+  --gray-0: oklch(0.98 0 0);
+  --gray-1: oklch(0.94 0 0);
+  --gray-2: oklch(0.88 0 0);
+  --gray-3: oklch(0.76 0 0);
+  --gray-4: oklch(0.62 0 0);
+  --gray-5: oklch(0.48 0 0);
+  --gray-6: oklch(0.34 0 0);
+  --gray-7: oklch(0.22 0 0);
+  --gray-8: oklch(0.14 0 0);
+  --gray-9: oklch(0.09 0 0);
+
+  /* ---- semantic — light mode ---- */
+  --color-bg:            var(--gray-0);
+  --color-bg-solid:      #ffffff;
+  --color-fg:            var(--gray-9);
+  --color-border:        oklch(0.09 0 0 / 12%);
+  --color-border-strong: oklch(0.09 0 0 / 30%);
+  --color-overlay:       oklch(0.09 0 0 / 5%);
+  --color-overlay-hover: oklch(0.09 0 0 / 9%);
+  --color-muted:         var(--gray-5);
+  --color-faint:         oklch(0.09 0 0 / 55%);
+  --color-shadow:        oklch(0.09 0 0 / 18%);
+
+  /* ---- signals — semantic, not decorative ---- */
+  --state-error:   oklch(0.55 0.22 25);
+  --state-warning: oklch(0.60 0.18 72);
+  --state-success: oklch(0.50 0.18 150);
+  --state-info:    oklch(0.50 0.18 240);
+  --state-running: oklch(0.50 0.18 240);
+
+  /* ---- type ---- */
+  /* One face for the whole system. AKR DWG SC NFM is monospaced (isFixedPitch,
+     PANOSE proportion 9, every digit 500 units), so it fills both roles:
+     tabular figures come free, and the difference between UI text and machine
+     text is carried by case, weight and tracking rather than by family. It also
+     ships a slashed zero. */
+  --font-ui:   "AKRDWGSCNFM", system-ui, -apple-system, sans-serif;
+  --font-mono: "AKRDWGSCNFM", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ---- geometry ---- */
+  --radius: 0px;
+  --space:  4px;
+
+  /* ---- shorthand aliases ---- */
+  --border:        1px solid var(--color-border);
+  --border-strong: 1px solid var(--color-border-strong);
+  --shadow-hard:   4px 4px 0 0 var(--color-shadow);
+}
+
+/* ---- dark mode ---- */
+.dark {
+  --color-bg:            var(--gray-9);
+  --color-bg-solid:      oklch(0.12 0 0);
+  --color-fg:            var(--gray-0);
+  --color-border:        oklch(0.98 0 0 / 10%);
+  --color-border-strong: oklch(0.98 0 0 / 28%);
+  --color-overlay:       oklch(0.98 0 0 / 5%);
+  --color-overlay-hover: oklch(0.98 0 0 / 9%);
+  --color-muted:         var(--gray-3);
+  --color-faint:         oklch(0.98 0 0 / 52%);
+  --color-shadow:        oklch(0 0 0 / 60%);
+
+  /* signals: lighter + less chroma in dark — more readable against dark bg */
+  --state-error:   oklch(0.68 0.18 25);
+  --state-warning: oklch(0.72 0.16 75);
+  --state-success: oklch(0.65 0.16 150);
+  --state-info:    oklch(0.65 0.16 240);
+  --state-running: oklch(0.65 0.16 240);
+}

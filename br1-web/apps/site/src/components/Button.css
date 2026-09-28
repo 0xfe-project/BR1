@@ -1,0 +1,98 @@
+/* ============================================================================
+ * Button — BR1 mechanical switch.
+ *
+ * Two-stage: hover is pre-travel, press is the actuation point, release is the
+ * spring return (run by the use:springRelease directive).
+ *
+ * Every state is also reachable declaratively via [data-state] so a state
+ * matrix can show twenty of them at once — you cannot hover twenty buttons.
+ * ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  position: relative;
+  border-radius: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+
+  padding: 5px 11px;
+  min-height: 27px;
+
+  /* declared on the base so the exit transition runs too — a transition only
+     present on :hover is a transition that vanishes when you leave */
+  transition:
+    border-color 60ms ease-out,
+    background 60ms ease-out,
+    color 60ms ease-out,
+    transform 20ms ease-in;
+}
+
+.btn[data-state="hover"] { transition: none; }
+.btn[data-state="active"] { transition: none; }
+
+.btn:disabled, .btn[data-state="disabled"] {
+  opacity: 0.36;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ---- OUTLINE (default) ---- */
+.btn-outline { border: 1px solid var(--color-border-strong); background: transparent; color: var(--color-fg); }
+.btn-outline:hover, .btn-outline[data-state="hover"] {
+  border-color: var(--color-fg);
+  background: var(--color-overlay);
+}
+.btn-outline[data-pressed], .btn-outline[data-state="active"] {
+  transform: translateY(2px);
+  background: var(--color-fg);
+  color: var(--color-bg);
+  border-color: var(--color-fg);
+}
+
+/* ---- PRIMARY (inverted) ---- */
+.btn-primary { border: 1px solid var(--color-fg); background: var(--color-fg); color: var(--color-bg); }
+.btn-primary:hover, .btn-primary[data-state="hover"] {
+  background: transparent;
+  color: var(--color-fg);
+}
+.btn-primary[data-pressed], .btn-primary[data-state="active"] {
+  transform: translateY(2px);
+  box-shadow: inset 0 2px 4px var(--color-shadow);
+}
+
+/* ---- GHOST ---- */
+.btn-ghost { border: 1px solid transparent; background: transparent; color: var(--color-muted); }
+.btn-ghost:hover, .btn-ghost[data-state="hover"] {
+  border-color: var(--color-border);
+  background: var(--color-overlay);
+  color: var(--color-fg);
+}
+.btn-ghost[data-pressed], .btn-ghost[data-state="active"] {
+  transform: translateY(2px);
+  background: var(--color-overlay-hover);
+}
+
+/* ---- DANGER ---- */
+.btn-danger { border: 1px solid var(--state-error); background: transparent; color: var(--state-error); }
+.btn-danger:hover, .btn-danger[data-state="hover"] {
+  background: var(--state-error);
+  color: var(--color-bg);
+}
+.btn-danger[data-pressed], .btn-danger[data-state="active"] {
+  transform: translateY(2px);
+}
+
+/* ---- sizes ---- */
+.btn-sm { font-size: 10px; padding: 3px 8px; min-height: 23px; }
+.btn-icon { padding: 0; width: 27px; height: 27px; }

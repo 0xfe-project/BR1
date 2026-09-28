@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="BR1">
+  <!--
+    The whole language in one shape: a hard square, and its hard offset shadow.
+    No radius. No blur. Nothing here that a CSS declaration could not also say:
+
+      box-shadow: 4px 4px 0 0 rgba(0,0,0,.62);
+
+    Drawn at 16px as well, because an icon that only works at 256px is a poster.
+  -->
+  <rect width="32" height="32" fill="#0a0a0a"/>
+  <rect x="15" y="15" width="12" height="12" fill="#5c5c5c"/>
+  <rect x="5" y="5" width="12" height="12" fill="#fafafa"/>
+</svg>
